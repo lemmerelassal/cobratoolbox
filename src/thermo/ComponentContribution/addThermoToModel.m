@@ -12,7 +12,9 @@ function model = addThermoToModel(model)
 %
 % returns:
 %   model        - same as the input, but with values of Gibbs energies
-
+if ~exist('printlevel','var')
+    printlevel=0;
+end
 use_cached_kegg_inchis = true;
 % use_cached_kegg_inchis = false;
 use_model_pKas_by_default = true;
