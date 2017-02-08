@@ -1,10 +1,11 @@
-clear
+function x = testStoichiometricConsistency()
+
 if 1
     %graphStoich/data/modelCollection/121114_Recon2betaModel.mat
-    load 121114_Recon2betaModel.mat
-    model=modelRecon2beta121114;
+    load 121114_Recon2betaRecon.mat %121114_Recon2betaModel.mat
+    model=modelRecon2beta121114Recon; %modelRecon2beta121114;
 else
-    load /home/rfleming/work/modeling/projects/graphStoich/data/modelCollectionBig/KEGGMatrix.mat
+    load KEGGMatrix.mat
     model=KEGG;
 end
 
@@ -12,7 +13,7 @@ end
 model=findSExRxnInd(model);
 
 %solverOK = changeCobraSolver('mosek_linprog','LP');
-solverOK = changeCobraSolver('gurobi5','LP');
+solverOK = changeCobraSolver('gurobi6','LP');
 printLevel=1;
 
 [nMet,nIntRxn]=size(model.S(:,model.SIntRxnBool));
@@ -25,7 +26,7 @@ if 1
         %of S corresponding to exchange reactions
         clear method
         method.interface='solveCobraLP';
-        method.solver='gurobi5';
+        method.solver='gurobi6';
         method.param.Method=1;
         [inform(i),m(:,i),models{i}]=checkStoichiometricConsistency(model,printLevel,method);
         i=i+1;
@@ -36,7 +37,7 @@ if 1
         %of S corresponding to exchange reactions
         clear method
         method.interface='solveCobraLP';
-        method.solver='gurobi5';
+        method.solver='gurobi6';
         method.param.Method=2;
         [inform(i),m(:,i),models{i}]=checkStoichiometricConsistency(model,printLevel,method);
         i=i+1;
@@ -47,7 +48,7 @@ if 1
         %of S corresponding to exchange reactions
         clear method
         method.interface='solveCobraLP';
-        method.solver='gurobi5';
+        method.solver='gurobi6';
         method.param.Method=3;
         [inform(i),m(:,i),models{i}]=checkStoichiometricConsistency(model,printLevel,method);
         i=i+1;
@@ -58,7 +59,7 @@ if 1
         %of S corresponding to exchange reactions
         clear method
         method.interface='solveCobraLP';
-        method.solver='gurobi5';
+        method.solver='gurobi6';
         method.param.Method=4;
         [inform(i),m(:,i),models{i}]=checkStoichiometricConsistency(model,printLevel,method);
         i=i+1;
@@ -142,7 +143,11 @@ if 0
 end
 
 m=full(m);
+load m_ref;
 
+x = isequal(m,m_ref);
+
+end
 
 
        
