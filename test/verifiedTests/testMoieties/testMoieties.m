@@ -2,8 +2,8 @@ function x = testMoieties()
 % Test code to identify conserved moieties in metabolic networks by graph
 % theoretical analysis of atom transition networks.
 
-load ../tutorials/moieties/Data/DAS.mat % The dopamine synthesis network
-rxnfileDir = '../tutorials/moieties/Data/AlternativeAtomMappingFiles/'; % Predicted atom mappings from DREAM (http://selene.princeton.edu/dream/)
+load ../../tutorials/moieties/Data/DAS.mat % The dopamine synthesis network
+rxnfileDir = '../../tutorials/moieties/Data/AlternativeAtomMappingFiles/'; % Predicted atom mappings from DREAM (http://selene.princeton.edu/dream/)
 
 % Generate atom transition network
 ATN = buildAtomTransitionNetwork(model,rxnfileDir);
@@ -23,7 +23,7 @@ changeCobraSolver('glpk','milp');
 D = decomposeMoietyVectors(L,N);
 
 % Estimate chemical formulas of decomposed moieties
-load ../tutorials/moieties/Data/elementalMatrix.mat % Load elemental matrix
+load ../../tutorials/moieties/Data/elementalMatrix.mat % Load elemental matrix
 [decomposedMoietyFormulas,M] = estimateMoietyFormulas(D,E,elements);
 
 % Check results
