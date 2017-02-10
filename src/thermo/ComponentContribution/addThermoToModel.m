@@ -1,4 +1,4 @@
-function model = addThermoToModel(model)
+function model = addThermoToModel(model,printlevel)
 % given a standard COBRA model, add thermodynamic data to it using
 % the Component Contribution method
 %
@@ -36,7 +36,7 @@ training_data.nstd_inchi = kegg_inchies.nstd_inchi(inds);
 training_data = balanceReactionsInTrainingData(training_data);
 
 % get the pKas for the compounds in the training data (using ChemAxon)
-training_data.kegg_pKa = getTrainingDatapKas(training_data);
+training_data.kegg_pKa = getTrainingDatapKas(training_data,1,printlevel);
 
 % match between the compounds in the model and the KEGG IDs used in the
 % training data, and create the group incidence matrix (G) for the
@@ -48,7 +48,9 @@ training_data = createGroupIncidenceMatrix(model, training_data);
 training_data = reverseTransformTrainingData(model, training_data, use_model_pKas_by_default);
 
 %%
-fprintf('Running Component Contribution method\n');
+if printlevel > 0
+    fprintf('Running Component Contribution method\n');
+end
 % Estimate standard Gibbs energies of formation
 [x, cov_x] = componentContribution(full(training_data.S), full(training_data.G), training_data.dG0, training_data.weights);
 

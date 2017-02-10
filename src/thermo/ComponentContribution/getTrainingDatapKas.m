@@ -1,4 +1,4 @@
-function kegg_pKa = getTrainingDatapKas(training_data, use_cache)
+function kegg_pKa = getTrainingDatapKas(training_data, use_cache,printlevel)
 
 % printlevel             0: No verbose output
 %                   1: Progress information only (no warnings)
