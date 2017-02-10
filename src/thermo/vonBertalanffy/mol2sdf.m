@@ -107,11 +107,15 @@ for m = 1:length(molfileNames)
     
     % Add molfile to SDF
     if first
-        fprintf(fid,'%s\n',molfile);
+        if printlevel > 0
+            fprintf(fid,'%s\n',molfile);
+        end
         first = false;
     else
-        fprintf(fid,'%s\n','$$$$');
-        fprintf(fid,'%s\n',molfile);
+        if printlevel > 0
+            fprintf(fid,'%s\n','$$$$');
+            fprintf(fid,'%s\n',molfile);
+        end
     end
 end
 fclose(fid);
