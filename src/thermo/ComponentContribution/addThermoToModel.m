@@ -1,4 +1,4 @@
-function model = addThermoToModel(model,printlevel)
+function model = addThermoToModel(model,printlevel,use_cached_kegg_inchis)
 % given a standard COBRA model, add thermodynamic data to it using
 % the Component Contribution method
 %
@@ -15,7 +15,10 @@ function model = addThermoToModel(model,printlevel)
 if ~exist('printlevel','var')
     printlevel=0;
 end
-use_cached_kegg_inchis = true;
+if ~exist('use_cached_kegg_inchis','var')
+    use_cached_kegg_inchis = true;
+end
+%use_cached_kegg_inchis = true;
 % use_cached_kegg_inchis = false;
 use_model_pKas_by_default = true;
 

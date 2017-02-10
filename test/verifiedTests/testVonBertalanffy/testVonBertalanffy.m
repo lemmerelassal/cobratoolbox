@@ -37,8 +37,11 @@ xmax = 0.02*ones(size(model.mets)); % Upper bounds on metabolite concentrations 
 
 confidenceLevel = 0.95; % Confidence level for estimated standard transformed reaction Gibbs energies. Used to quantitatively assign reaction directionality.
 
+use_cached_kegg_inchis = 0;
+printlevel = 2;
+
 %% Call setupThermoModel
-modelT = setupThermoModel(model,molfileDir,cid,T,cellCompartments,ph,is,chi,xmin,xmax,confidenceLevel);
+modelT = setupThermoModel(model,molfileDir,cid,T,cellCompartments,ph,is,chi,xmin,xmax,confidenceLevel,use_cached_kegg_inchis,printlevel);
 
 save('iAF1260Thermo_test.mat', 'modelT', '-v7');
 

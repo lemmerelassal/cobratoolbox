@@ -1,4 +1,4 @@
-function modelT = setupThermoModel(model,molfileDir,cid,T,cellCompartments,ph,is,chi,xmin,xmax,confidenceLevel,printlevel)
+function modelT = setupThermoModel(model,molfileDir,cid,T,cellCompartments,ph,is,chi,xmin,xmax,confidenceLevel,use_cached_kegg_inchis,printlevel)
 % Estimates standard transformed reaction Gibbs energy and directionality
 % at in vivo conditions in multicompartmental metabolic reconstructions.
 % Has external dependencies on the COBRA toolbox, the component
@@ -233,7 +233,7 @@ end
 if printlevel > 0
     fprintf('\nEstimating standard Gibbs energies with the component contribution method.\n');
 end
-model = addThermoToModel(model,printlevel);
+model = addThermoToModel(model,printlevel,use_cached_kegg_inchis);
 
 % Check for imbalanced reactions
 fprintf('\nChecking mass- and charge balance.\n');
