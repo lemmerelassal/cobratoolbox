@@ -1,4 +1,4 @@
-function metList = mol2sdf(mets,molfileDir,sdfFileName,includeRs)
+function metList = mol2sdf(mets,molfileDir,sdfFileName,includeRs,printlevel)
 % Concatenates molfiles in molfileDir into one SDF file.
 % 
 % metList = mol2sdf(mets,molfileDir,sdfFileName)
@@ -117,7 +117,9 @@ end
 fclose(fid);
 
 noMolFileCount = sum(~ismember(mets,molfileNames));
-fprintf('Percentage of metabolites without mol files: %.1f%%\n', 100*noMolFileCount/length(mets));
+if printlevel > 0
+    fprintf('Percentage of metabolites without mol files: %.1f%%\n', 100*noMolFileCount/length(mets));
+end
 
 metList = reshape(metList,length(metList),1);
 if isnumeric(omets)
