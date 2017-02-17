@@ -1,5 +1,4 @@
-function statusOK = testGDLS()
-%testGDLS tests the functionality of GDLS.
+% testGDLS tests the functionality of GDLS.
 
 %save original directory
 oriDir = pwd;
@@ -22,14 +21,18 @@ selectedRxns = {model.rxns{1},model.rxns{3:5},model.rxns{7:8}, ...
     model.rxns{64:68},model.rxns{71:77},model.rxns{79:83}, ...
     model.rxns{85:86},model.rxns{89:95}}';
 
-%run GDLS
-[gdlsSolution] = GDLS(model, 'EX_succ(e)', 'minGrowth', 0.05, 'selectedRxns', selectedRxns, 'maxKO', 5, 'nbhdsz', 3);
+% change solver to tomlab_cplex, because cplex doesn't work with Matlab 2016b
+solverOK = changeCobraSolver('tomlab_cplex', 'MILP');
+assert(solverOK == 1);
 
-%check solution
-if length(gdlsSolution.KOs)==5 && all(ismember(gdlsSolution.KOs,{'ACALD';'ALCD2x';'GLUDy';'LDH_D';'PFL';'THD2'}))
-    statusOK = 1;
-else
-    statusOK = 0;
+
+if solverOK
+    %run GDLS
+    [gdlsSolution] = GDLS(model, 'EX_succ(e)', 'minGrowth', 0.05, 'selectedRxns', selectedRxns, 'maxKO', 5, 'nbhdsz', 3);
+    
+    %check solution
+    %x = length(gdlsSolution.KOs)==5 && all(ismember(gdlsSolution.KOs,{'ACALD';'ALCD2x';'GLUDy';'LDH_D';'PFL';'THD2'}));
+    assert(length(gdlsSolution.KOs)==5 && all(ismember(gdlsSolution.KOs,{'ACALD';'ALCD2x';'GLUDy';'LDH_D';'PFL';'THD2'})));
 end
 
 %return to original directory
