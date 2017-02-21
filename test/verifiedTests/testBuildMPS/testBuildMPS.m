@@ -1,10 +1,9 @@
-function statusOK = testBuildMPS()
 %Sets cobraLP and cobraMILP solver to MPS, generates test MPS files named 
 %testMPSLP.mps and testMPSMILP.mps by calling solveCobraLP and 
 %solveCobraMILP and resets cobraLP and cobraMILP solver to original 
 %solver.
 
-statusOK = 1;
+%statusOK = 1;
 
 %save current directory
 origDir = pwd;
@@ -45,16 +44,18 @@ mpsFileLP = solveCobraLP(LPproblem,paramStruct);
 
 %Verify mpsFile
 load('mpsFileStd.mat');
-if any(~strcmp(mpsFileLP,mpsFileLPStd))
-    display('LP MPS matrix does not match');
-    statusOK = 0;
-end
+assert(any(strcmp(mpsFileLP,mpsFileLPStd)));
+%if any(~strcmp(mpsFileLP,mpsFileLPStd))
+%    display('LP MPS matrix does not match');
+%    statusOK = 0;
+%end
 
 %Verify File Exists
-if ~exist('testMPSLP.mps','file')
-    display('testMPSLP file not written');
-    statusOK=0;
-end
+assert(exist('testMPSLP.mps','file') ~= 0);
+% if ~exist('testMPSLP.mps','file')
+%     display('testMPSLP file not written');
+%     statusOK=0;
+% end
 
 %Sample MILP Problem
 MILPproblem.A = [1 1 0; -1 0 -1; 0 -1 1];           %LHS matrix
@@ -79,16 +80,13 @@ paramStruct.VarNameFun=VarNameFun;
 mpsFileMILP = solveCobraMILP(MILPproblem,paramStruct);
 
 %Verify mpsFile
-if any(~strcmp(mpsFileMILP,mpsFileMILPStd))
-    display('MILP MPS matrix does not match');
-    statusOK = 0;
-end
+assert(any(strcmp(mpsFileMILP,mpsFileMILPStd)));
+%     display('MILP MPS matrix does not match');
+
 
 %Verify File Exists
-if ~exist('testMPSMILP.mps','file')
-    display('testMPSMILP.mps file not written');
-    statusOK=0;
-end
+assert(exist('testMPSMILP.mps','file') ~= 0);
+%     display('testMPSMILP.mps file not written');
 
 %Removed the test because the error on some systems is not an error 1e-05 = 1e-005 as
 %a number but not as a string.
