@@ -33,6 +33,39 @@ sudo ./<filename>.bin
 pathtool
 6) Click "Add with Subfolders..." and select the directory where Mosek was extracted.
 
+Gurobi
+------
+1) Register and log in to http://www.gurobi.com/
+2) Request licence from http://www.gurobi.com/downloads/download-center
+3) Download from http://www.gurobi.com/downloads/gurobi-optimizer
+4) In a shell, navigate to the directory where Gurobi was downloaded and enter:
+tar xvzf <archive>.tar.gz
+mv gurobi<ver> /opt/gurobi<ver>/
+cd /opt/gurobi<ver>/linux64/bin/
+./grbgetkey YOUR-LICENCE-KEY-FROM-SITE
+
+5) Use default directory for licence file (/home/<userid>).
+6) 
+sudo gedit /etc/bash.bashrc
+
+7) Append these lines, save and exit:
+export GUROBI_HOME=/usr/local/bin/gurobi<ver>/linux64
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/bin/gurobi<ver>/linux64/lib
+export GRB_LICENSE_FILE=/home/<userid>/gurobi.lic
+
+8) Verify it's successfully installed:
+./grbprobe
+
+should give something similar to:
+HOSTNAME=BPF00271
+HOSTID=7ed107d9
+PLATFORM=linux64
+USERNAME=<userid>
+SOCKETS=2
+CPU=Intel(R) Xeon(R) CPU E5-2620 v4 @ 2.10GHz
+
+
+
 
 OPTI Toolbox %% INCOMPLETE
 ------------
