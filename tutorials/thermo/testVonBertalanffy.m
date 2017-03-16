@@ -79,7 +79,7 @@
 % 
 % PATH=$PATH:/opt/ChemAxon/MarvinBeans/bin 
 % 
-% sudo export PATH
+% export PATH
 
 %% OpenBabel and Python bindings  
 % Install the OpenBabel and Python 2 bindings by entering the following: 
